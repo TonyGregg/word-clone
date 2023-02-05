@@ -1,32 +1,39 @@
 import React from "react";
 
-function GuessGame({ handleSubmitGuess}) {
-  const [guess, setGuess] = React.useState("");
+function GuessGame({ gameStatus, handleSubmitGuess }) {
+  const [tentativeGuess, setTentativeGuess] = React.useState("");
+
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    if (tentativeGuess.length !== 5) {
+      window.alert("Please enter exactly 5 characters");
+      return;
+    }
+    console.log("guessed word " + tentativeGuess.toUpperCase());
+
+    handleSubmitGuess(tentativeGuess.toUpperCase());
+
+    setTentativeGuess("");
+  }
 
   return (
-    <form
-      className="guess-input-wrapper"
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (guess.length !== 5) return;
-        console.log(guess);
-        handleSubmitGuess(guess);
-        setGuess("");
-      }}
-    >
-      <label for="guess-input">Enter guess:</label>
+    <form onSubmit={handleSubmit} className="guess-input-wrapper">
+      <label htmlFor="guess-input">Enter guess:</label>
       <input
+        required
+        disabled={gameStatus !== "playing"}
+        minLength={5}
+        maxLength={5}
+        value={tentativeGuess}
+        onChange={(event) => {
+          const nextGuess = event.target.value.toUpperCase();
+          setTentativeGuess(nextGuess);
+        }}
         id="guess-input"
         type="text"
-        min={5}
-        max={5}
-        value={guess}
-        onChange={(event) => {
-          setGuess(event.target.value.toUpperCase());
-        }}
       />
     </form>
   );
 }
-
 export default GuessGame;
