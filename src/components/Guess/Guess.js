@@ -1,18 +1,16 @@
 import React from "react";
 import { range } from "../../utils";
 
-function Guess({ guessedWord, index }) {
-  if (!guessedWord) return;
-  console.log("guessedWord: ", guessedWord, "index: ", index);
+function Guess({ guessedWord }) {
+  if (!guessedWord) guessedWord = "    ";
+  console.log("guessedWord: ", guessedWord);
   return (
-    <p class="guess" key={index}>
-      {range(5).map((id) => {
-        return (
-          <span class="cell" key={index + "-" + id}>
-            {guessedWord.charAt(id)}
-          </span>
-        );
-      })}
+    <p className="guess">
+      {range(5).map((num) => (
+        <span key={num} className="cell">
+          {guessedWord[num]}
+        </span>
+      ))}
     </p>
   );
 }

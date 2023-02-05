@@ -1,6 +1,6 @@
 import React from "react";
 
-function GuessGame({ guesses, setGuesses }) {
+function GuessGame({ handleSubmitGuess}) {
   const [guess, setGuess] = React.useState("");
 
   return (
@@ -10,11 +10,7 @@ function GuessGame({ guesses, setGuesses }) {
         event.preventDefault();
         if (guess.length !== 5) return;
         console.log(guess);
-        if (guesses.length >= 6) return;
-        const newGuesses = [...guesses];
-        newGuesses.push(guess);
-        setGuesses(newGuesses);
-        console.log(newGuesses);
+        handleSubmitGuess(guess);
         setGuess("");
       }}
     >
